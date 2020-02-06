@@ -1,0 +1,162 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Textures/back3.png" type="Texture" id=1]
+[ext_resource path="res://Kitchen.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Table.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Control.gd" type="Script" id=5]
+[ext_resource path="res://Node2D.gd" type="Script" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+
+var cake_list = []
+
+func _ready():
+	pass
+
+func _process(delta):
+	
+	while len(cake_list) != 0:
+		$Kitchen.spawn(cake_list[0])
+		cake_list.pop_front()
+	
+	$Control/Label.text = \"Lives : \" + str($Player.lives)
+	$Control/Label2.text = \"Score : \" + str($Player.score)
+	$Node2D.Property = 500 - 5*$Player.score
+	
+	for child in $Tables.get_children():
+		child.MIMEE = 2000 - 5*$Player.score"
+
+[node name="Game" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 514.422, 303.251 )
+scale = Vector2( 1.60236, 1.50337 )
+texture = ExtResource( 1 )
+
+[node name="Kitchen" parent="." instance=ExtResource( 2 )]
+position = Vector2( 941.77, -8.74765 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 885, 280 )
+collision_layer = 15
+collision_mask = 15
+
+[node name="Tables" type="Node2D" parent="."]
+
+[node name="Table" parent="Tables" instance=ExtResource( 4 )]
+position = Vector2( 124.1, 105.263 )
+scale = Vector2( 0.75, 0.75 )
+collision_layer = 31
+collision_mask = 31
+
+[node name="Table2" parent="Tables" instance=ExtResource( 4 )]
+position = Vector2( 124.1, 297.711 )
+scale = Vector2( 0.75, 0.75 )
+collision_layer = 31
+collision_mask = 31
+
+[node name="Table3" parent="Tables" instance=ExtResource( 4 )]
+position = Vector2( 124.1, 487.826 )
+scale = Vector2( 0.75, 0.75 )
+collision_layer = 31
+collision_mask = 31
+
+[node name="Border" type="StaticBody2D" parent="."]
+editor/display_folded = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border"]
+polygon = PoolVector2Array( 17.8565, -31.8821, 1027.27, -29.6661, 1077.14, -26.342, 1077.14, 2.46689, 10.1002, 0.250824, 7.88414, 601.913, 1029.49, 606.345, 1030.6, 8.00706, 1073.81, 11.3312, 1076.03, 649.558, -24.2488, 646.234, -19.8167, -30.7741 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Button" type="Button" parent="Control"]
+margin_left = 907.0
+margin_top = 459.0
+margin_right = 979.0
+margin_bottom = 487.0
+action_mode = 0
+
+[node name="Button2" type="Button" parent="Control"]
+margin_left = 976.0
+margin_top = 486.0
+margin_right = 1013.0
+margin_bottom = 546.0
+
+[node name="Button3" type="Button" parent="Control"]
+margin_left = 907.513
+margin_top = 545.3
+margin_right = 979.513
+margin_bottom = 574.3
+
+[node name="Button4" type="Button" parent="Control"]
+margin_left = 872.0
+margin_top = 486.0
+margin_right = 907.0
+margin_bottom = 546.0
+
+[node name="Label" type="Label" parent="Control"]
+margin_left = 259.0
+margin_top = 7.0
+margin_right = 313.0
+margin_bottom = 52.0
+rect_scale = Vector2( 2.25, 2.24 )
+text = "Lives
+"
+
+[node name="Label2" type="Label" parent="Control"]
+margin_left = 427.0
+margin_top = 7.0
+margin_right = 482.0
+margin_bottom = 52.0
+rect_scale = Vector2( 2.25, 2.24 )
+text = "Score : 0
+"
+
+[node name="Label3" type="Label" parent="Control"]
+visible = false
+margin_left = 669.0
+margin_top = 7.0
+margin_right = 724.0
+margin_bottom = 52.0
+rect_scale = Vector2( 2.25, 2.24 )
+text = "Time : 0
+"
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="Node2D1" type="Node2D" parent="Node2D"]
+position = Vector2( 728.415, -49.6375 )
+
+[node name="Node2D6" type="Node2D" parent="Node2D"]
+position = Vector2( 751.909, 690.179 )
+
+[node name="Node2D5" type="Node2D" parent="Node2D"]
+position = Vector2( 525.956, -54.15 )
+
+[node name="Node2D2" type="Node2D" parent="Node2D"]
+position = Vector2( 557.283, 685.666 )
+
+[node name="Node2D3" type="Node2D" parent="Node2D"]
+position = Vector2( 358.362, -58.6625 )
+
+[node name="Node2D4" type="Node2D" parent="Node2D"]
+position = Vector2( 372.856, 681.154 )
+[connection signal="button_down" from="Control/Button" to="Player" method="_on_ButtonUp_button_down"]
+[connection signal="button_up" from="Control/Button" to="Player" method="_on_ButtonUp_button_up"]
+[connection signal="button_down" from="Control/Button2" to="Player" method="_on_ButtonRight_button_down"]
+[connection signal="button_up" from="Control/Button2" to="Player" method="_on_ButtonRight_button_up"]
+[connection signal="button_down" from="Control/Button3" to="Player" method="_on_ButtonDown_button_down"]
+[connection signal="button_up" from="Control/Button3" to="Player" method="_on_ButtonDown_button_up"]
+[connection signal="button_down" from="Control/Button4" to="Player" method="_on_ButtonLeft_button_down"]
+[connection signal="button_up" from="Control/Button4" to="Player" method="_on_ButtonLeft_button_up"]
