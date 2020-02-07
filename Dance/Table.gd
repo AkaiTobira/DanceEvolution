@@ -5,6 +5,10 @@ var timers           = [ 0, 0, 0, 0]
 
 var MIMEE = 2000
 
+func reset():
+	required_cake_id = [ 0, 0, 0, 0]
+	timers           = [ 0, 0, 0, 0]
+
 func update_req(node, iindex):
 	if required_cake_id[iindex] == 0: 
 		if randi()%MIMEE == 0 :

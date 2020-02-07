@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
-var iMult    = [ 0,     5, 7.5,   9]
-var dMult    = [ 0,   3.5,   6,   7]
+var iMult    = [ 0, 5, 7.5,  9]
+var dMult    = [ 0, 7,  10, 12]
+
 var bSPEED   = [ 7,   5.5,  4,  3]
-var cSPEED   = [ 10,  7.5,  6,  4]
+var cSPEED   = [ 10,  7.5,  6,  4.5]
+
 var eSpeed   = 3
 
 var lives    = 3
@@ -20,6 +22,7 @@ var directions = { "left"  : { "enabled" : false, "dir" : Vector2(-1, 0) },
 				   "up"    : { "enabled" : false, "dir" : Vector2(0, -1) } }
 
 func reset():
+	get_parent().reset_tables()
 	position  = Vector2( 885, 280 )
 	nb_plates = 0
 	damaged   = 0

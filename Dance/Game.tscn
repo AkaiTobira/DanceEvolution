@@ -22,12 +22,17 @@ func _process(delta):
 		$Kitchen.spawn(cake_list[0])
 		cake_list.pop_front()
 	
-	$Control/Label.text = \"Lives : \" + str($Player.lives)
+	$Control/Label.text  = \"Lives : \" + str($Player.lives)
 	$Control/Label2.text = \"Score : \" + str($Player.score)
-	$Node2D.Property = 500 - 5*$Player.score
+	$Node2D.Property     = 500 - 5*$Player.score
 	
 	for child in $Tables.get_children():
-		child.MIMEE = 2000 - 5*$Player.score"
+		child.MIMEE = 2000 - 5*$Player.score
+
+func reset_tables():
+	for table in $Tables.get_children():
+		table.reset()
+"
 
 [node name="Game" type="Node2D"]
 script = SubResource( 1 )
@@ -66,7 +71,6 @@ collision_layer = 31
 collision_mask = 31
 
 [node name="Border" type="StaticBody2D" parent="."]
-editor/display_folded = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border"]
 polygon = PoolVector2Array( 17.8565, -31.8821, 1027.27, -29.6661, 1077.14, -26.342, 1077.14, 2.46689, 10.1002, 0.250824, 7.88414, 601.913, 1029.49, 606.345, 1030.6, 8.00706, 1073.81, 11.3312, 1076.03, 649.558, -24.2488, 646.234, -19.8167, -30.7741 )
@@ -80,29 +84,38 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="Control"]
-margin_left = 907.0
-margin_top = 459.0
-margin_right = 979.0
-margin_bottom = 487.0
+margin_left = 879.656
+margin_top = 378.32
+margin_right = 965.656
+margin_bottom = 449.32
 action_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button2" type="Button" parent="Control"]
-margin_left = 976.0
-margin_top = 486.0
-margin_right = 1013.0
-margin_bottom = 546.0
+margin_left = 960.788
+margin_top = 446.488
+margin_right = 1032.79
+margin_bottom = 528.488
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button3" type="Button" parent="Control"]
-margin_left = 907.513
-margin_top = 545.3
-margin_right = 979.513
-margin_bottom = 574.3
+margin_left = 877.782
+margin_top = 527.71
+margin_right = 963.782
+margin_bottom = 597.71
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button4" type="Button" parent="Control"]
-margin_left = 872.0
-margin_top = 486.0
-margin_right = 907.0
-margin_bottom = 546.0
+margin_left = 805.637
+margin_top = 449.895
+margin_right = 879.637
+margin_bottom = 527.895
 
 [node name="Label" type="Label" parent="Control"]
 margin_left = 259.0
@@ -152,6 +165,10 @@ position = Vector2( 358.362, -58.6625 )
 
 [node name="Node2D4" type="Node2D" parent="Node2D"]
 position = Vector2( 372.856, 681.154 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 517, 302 )
+current = true
 [connection signal="button_down" from="Control/Button" to="Player" method="_on_ButtonUp_button_down"]
 [connection signal="button_up" from="Control/Button" to="Player" method="_on_ButtonUp_button_up"]
 [connection signal="button_down" from="Control/Button2" to="Player" method="_on_ButtonRight_button_down"]
