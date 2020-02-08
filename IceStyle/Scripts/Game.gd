@@ -14,9 +14,15 @@ onready var player_start_pos = $Player.position
 
 var enemy = preload( "res://Scenes/Enemy.tscn" )
 
+var posiitoen = []
+
+func _ready():
+	$Line2D.points.append($Player.position)
+
 func add_new_step(delta):
 	timer += delta
 	if timer < step: return 
+	posiitoen.append($Player.position )
 	path.append([$Player.dir, $Player.expected_dir, $Player.position])
 	timer = 0
 
@@ -24,7 +30,7 @@ func spawn_new_enemy(delta):
 	timer2 += delta
 	if timer2 < step2: return 
 	timer2 = 0
-	
+
 	var instance = enemy.instance()
 	instance.position = player_start_pos
 	call_deferred("add_child", instance)
@@ -32,6 +38,12 @@ func spawn_new_enemy(delta):
 func _process(delta): 
 	add_new_step(delta)
 	spawn_new_enemy(delta)
+	
+	
+	
+	print( posiitoen)
+	
+	$Line2D.points = posiitoen
 	
 	timer3 += delta
 	$Label.text = "TIME : " + str(timer3)

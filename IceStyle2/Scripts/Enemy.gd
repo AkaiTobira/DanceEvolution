@@ -52,4 +52,4 @@ func update_direction(delta):
 	
 
 func _on_Enemy_body_entered(body):
-	if body.name == "Player" : get_parent().get_parent().reset()
+	if body.name == "Player" : pass#get_parent().get_parent().reset()

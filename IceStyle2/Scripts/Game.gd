@@ -6,7 +6,7 @@ var timer = 0
 var step  = 0.5
 
 var timer2 = 0
-var step2  = 4
+var step2  = 0.01
 
 var timer3 = 0
 
@@ -46,7 +46,8 @@ func spawn_new_enemy(delta):
 	
 	var instance = enemy.instance()
 	instance.position = Vector2(0,0)
-	instance.modul = $Enemies.get_child_count()
+	instance.modul    = counter
+	instance.index    = randi()%counter
 	$Enemies.call_deferred("add_child", instance)
 
 func _process(delta): 
