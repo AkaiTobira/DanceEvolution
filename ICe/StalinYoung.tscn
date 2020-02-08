@@ -13,6 +13,9 @@ var SPEED = 100
 var left  = 1
 var up    = -1
 
+var reverse = false
+
+var absolute = false
 var path = []
 
 func _ready():
@@ -22,22 +25,39 @@ func _ready():
 var time  = 0
 var time2 = 0
 var step  = 0.1 
+
+var time3 = 0
+var step3 = 25
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time += delta
-	position += delta * Vector2( sin( time* 2 ) * left, up ) * SPEED
+	
+	var sinus = sin( time* 2 ) * left
+	if absolute: sinus = abs(sin(time*2)) * left
+	
+	if reverse: up = 1
+	
+	position += delta * Vector2( sinus , up ) * SPEED
 	
 	$Line2D.position = - position 
 	$Line2D.points   = path
 	time2 += delta
 	if time2 > step:
 		time2 = 0
-		if len( path ) < 300: path.append( position )
+		path.append( position )
+		while len( path ) > 50: path.pop_front()
+
+	 
+
 	
 	if Input.is_action_just_pressed(\"ui_page_down\"):
 		$Line2D.default_color = Color(1,0,0)
 		$Sprite.texture = load(\"res://Textures/RedArmy.png\")
 		
+		
+	time3 += delta
+	if time3 > step3:
+		queue_free()
 	#if position.y < 0 : queue_free()
 	pass
 
@@ -50,7 +70,7 @@ func _on_StalinYoung_area_shape_entered(area_id, area, area_shape, self_shape):
 "
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 21.1246
+radius = 13.7018
 
 [node name="StalinYoung" type="Area2D" groups=[
 "E",

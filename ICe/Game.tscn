@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Textures/back4.png" type="Texture" id=2]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -10,6 +11,7 @@ script/source = "extends Node2D
 # var a = 2
 # var b = \"text\"
 
+var time = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,6 +32,16 @@ func spawn():
 			instance.position = Vector2( pos_x, ( 0 - i*100) if upOrDown else ( 800  + i*100) )
 			instance.up       = 1 if upOrDown else -1
 			call_deferred(\"add_child\", instance)
+			
+	if randi()%1000 ==0:
+		var upOrDown = randi()%2
+		var pos_y    = randi()%800
+		var instance = e.instance()
+		instance.position = Vector2( 0 if upOrDown else 600, pos_y )
+		instance.left     = 1 if upOrDown else -1
+		instance.absolute = true
+		instance.reverse  = randi()%2
+		call_deferred(\"add_child\", instance)
 
 onready var player_pos = $Area2D.position
 func reset():
@@ -38,12 +50,14 @@ func reset():
 	for child in get_children():
 		if \"E\" in child.get_groups(): 
 			child.queue_free()
+	time = 0
 
 func _process(delta):
 	spawn()
 	$Line2D.points = $Area2D.drived_road
+	time +=delta
 
-#	pass
+	$Label.text = \"Time : \" + str(time)
 "
 
 [node name="Game" type="Node2D" groups=[
@@ -51,8 +65,15 @@ func _process(delta):
 ]]
 script = SubResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.509804 )
+position = Vector2( 315.608, 413.555 )
+scale = Vector2( 1, 2.21074 )
+texture = ExtResource( 2 )
+
 [node name="Area2D" parent="." instance=ExtResource( 1 )]
 position = Vector2( 354.816, 277.469 )
+z_index = 5
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 633.466, 385.809, 322.848, 325.65 )
@@ -62,3 +83,15 @@ default_color = Color( 1, 0.4, 0.4, 1 )
 [node name="Line2D2" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 400, 600, 400 )
 width = 1.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 591.764
+margin_top = 10.883
+margin_right = 631.764
+margin_bottom = 24.883
+rect_rotation = 90.0
+rect_scale = Vector2( 4, 4 )
+text = "Time :"
+__meta__ = {
+"_edit_use_anchors_": false
+}

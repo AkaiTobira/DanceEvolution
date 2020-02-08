@@ -11,6 +11,8 @@ var dir_multipler = 1
 
 var drived_road = []
 
+var required_rotation = 0
+
 func _ready():
 	pass
 
@@ -22,14 +24,15 @@ func _input(event):
 		#expected_dir = (event.position - position).normalized()
 		if pressed :
 			var direction = 1 if event.position.y > 400 else -1
-			curr_rot += direction * PI/6
-			expected_dir = Vector2(0, -1).rotated( curr_rot )
+			required_rotation += direction * PI/6
+			#expected_dir = Vector2(0, -1).rotated( required_rotation )
 
 
 func update_direction(delta):
 	#if pressed : expected_dir = (get_global_mouse_position() - position).normalized()
-	$Sprite.rotation_degrees += dir_multipler * turn_speed * delta
-	dir = (dir + (expected_dir - dir) * rotationd * delta).normalized()
+	$Sprite.rotation_degrees += dir_multipler * turn_speed * delta	
+	curr_rot = curr_rot + ( required_rotation - curr_rot ) * rotationd * delta
+	dir = Vector2(0,-1).rotated( curr_rot ).normalized()
 
 
 var timer = 0
@@ -38,7 +41,7 @@ var step  = 0.1
 func _physics_process(delta): 
 	
 	$Line2D.points[1]  = 50 * dir
-	$Line2D2.points[1] = 50 * expected_dir
+	$Line2D2.points[1] = 50 * Vector2(0, -1).rotated(required_rotation)#expected_dir
 	
 	timer += delta
 	if timer > step: 
