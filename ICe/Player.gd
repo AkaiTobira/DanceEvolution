@@ -23,7 +23,7 @@ func _input(event):
 		pressed       = event.is_pressed()
 		#expected_dir = (event.position - position).normalized()
 		if pressed :
-			var direction = 1 if event.position.y > 400 else -1
+			var direction = 1 if event.position.y > 512 else -1
 			required_rotation += direction * PI/6
 			#expected_dir = Vector2(0, -1).rotated( required_rotation )
 
@@ -58,7 +58,7 @@ func teleport_througt_screen():
 	if position.x < 0   : get_parent().reset()
 	if position.x > 600 : get_parent().reset()
 	if position.y < 0   : get_parent().reset()
-	if position.y > 800 : get_parent().reset()
+	if position.y > 1024 : get_parent().reset()
 	
 #	if position.x < 0   : position.x = 600
 #	if position.x > 600 : position.x = 0

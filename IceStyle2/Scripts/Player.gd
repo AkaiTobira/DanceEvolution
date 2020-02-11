@@ -3,7 +3,7 @@ extends KinematicBody2D
 
 var dir          = Vector2(0, -1)
 var expected_dir = Vector2(0, -1)
-var SPEED = 100
+export var SPEED = 100
 var turn_speed = 100
  
 var pressed;

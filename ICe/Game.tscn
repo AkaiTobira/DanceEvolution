@@ -20,16 +20,14 @@ func _ready():
 var e = preload(\"res://StalinYoung.tscn\")
 
 func spawn():
-	#if Input.is_action_just_pressed(\"ui_accept\"):
 	if randi()%1000 == 0:
-		print(\"SPAWN\")
 		var upOrDown = randi()%2
 		
 		var pos_x = randi()%600
 		
 		for i in range( 5 ):
 			var instance = e.instance()
-			instance.position = Vector2( pos_x, ( 0 - i*100) if upOrDown else ( 800  + i*100) )
+			instance.position = Vector2( pos_x, ( 0 - i*100) if upOrDown else ( 1024  + i*100) )
 			instance.up       = 1 if upOrDown else -1
 			call_deferred(\"add_child\", instance)
 			
@@ -67,8 +65,8 @@ script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.509804 )
-position = Vector2( 315.608, 413.555 )
-scale = Vector2( 1, 2.21074 )
+position = Vector2( 315.608, 507.937 )
+scale = Vector2( 1, 2.68265 )
 texture = ExtResource( 2 )
 
 [node name="Area2D" parent="." instance=ExtResource( 1 )]
@@ -81,7 +79,7 @@ width = 2.0
 default_color = Color( 1, 0.4, 0.4, 1 )
 
 [node name="Line2D2" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 400, 600, 400 )
+points = PoolVector2Array( 0, 512, 600, 512 )
 width = 1.0
 
 [node name="Label" type="Label" parent="."]

@@ -2,11 +2,8 @@ extends Node2D
 
 onready var path = []
 
-var timer = 0
-var step  = 0.5
-
 var timer2 = 0
-var step2  = 0.01
+export var time_to_spawn_next  = 2
 
 var timer3 = 0
 
@@ -33,15 +30,10 @@ func _ready():
 			#if child_index == get_child_count()-1:
 				
 
-func add_new_step(delta):
-	timer += delta
-	if timer < step: return 
-	#path.append([$Player.dir, $Player.expected_dir, $Player.position])
-	timer = 0
 
 func spawn_new_enemy(delta):
 	timer2 += delta
-	if timer2 < step2: return 
+	if timer2 < time_to_spawn_next: return 
 	timer2 = 0
 	
 	var instance = enemy.instance()
@@ -51,7 +43,6 @@ func spawn_new_enemy(delta):
 	$Enemies.call_deferred("add_child", instance)
 
 func _process(delta): 
-	add_new_step(delta)
 	spawn_new_enemy(delta)
 	
 	timer3 += delta
@@ -59,11 +50,7 @@ func _process(delta):
 
 func reset():
 	$Player.position = player_start_pos
-	#for child in get_children():
-	#	if "E" in child.get_groups():
-	#		child.reset_secure = true
-	#		child.call_deferred("queue_free")
-			
+
 	for child_index in $Enemies.get_child_count():
 		var child = $Enemies.get_child(child_index)
 		if child_index > counter-1:
@@ -77,4 +64,3 @@ func reset():
 	
 	timer3 = 0
 	timer2 = 0
-	timer  = 0

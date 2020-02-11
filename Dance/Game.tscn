@@ -35,6 +35,8 @@ func reset_tables():
 "
 
 [node name="Game" type="Node2D"]
+position = Vector2( 605, 0 )
+rotation = 1.5708
 script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -168,10 +170,6 @@ position = Vector2( 358.362, -58.6625 )
 
 [node name="Node2D4" type="Node2D" parent="Node2D"]
 position = Vector2( 372.856, 681.154 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 517, 302 )
-current = true
 [connection signal="button_down" from="Control/Button" to="Player" method="_on_ButtonUp_button_down"]
 [connection signal="button_up" from="Control/Button" to="Player" method="_on_ButtonUp_button_up"]
 [connection signal="button_down" from="Control/Button2" to="Player" method="_on_ButtonRight_button_down"]

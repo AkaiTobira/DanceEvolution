@@ -16,8 +16,6 @@ var enemy = preload( "res://Scenes/Enemy.tscn" )
 
 var posiitoen = []
 
-func _ready():
-	$Line2D.points.append($Player.position)
 
 func add_new_step(delta):
 	timer += delta
@@ -38,12 +36,6 @@ func spawn_new_enemy(delta):
 func _process(delta): 
 	add_new_step(delta)
 	spawn_new_enemy(delta)
-	
-	
-	
-	print( posiitoen)
-	
-	$Line2D.points = posiitoen
 	
 	timer3 += delta
 	$Label.text = "TIME : " + str(timer3)

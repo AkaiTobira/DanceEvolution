@@ -16,10 +16,10 @@ var damaged = 0
 var plates    = [0, 0, 0]
 var nb_plates = 0 
 
-var directions = { "left"  : { "enabled" : false, "dir" : Vector2(-1, 0) },
-				   "right" : { "enabled" : false, "dir" : Vector2(1, 0) },
-				   "down"  : { "enabled" : false, "dir" : Vector2(0, 1) },
-				   "up"    : { "enabled" : false, "dir" : Vector2(0, -1) } }
+var directions = { "left"  : { "enabled" : false, "dir" : Vector2(0, -1) },
+				   "right" : { "enabled" : false, "dir" : Vector2(0, 1) },
+				   "down"  : { "enabled" : false, "dir" : Vector2(-1, 0) },
+				   "up"    : { "enabled" : false, "dir" : Vector2(1, 0) } }
 
 func reset():
 	get_parent().reset_tables()
